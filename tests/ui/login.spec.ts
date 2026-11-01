@@ -15,4 +15,11 @@ test.describe('Login', () => {
     await login.login('locked_out_user', 'secret_sauce');
     await expect(page.locator('[data-test="error"]')).toContainText('locked out');
   });
+
+  test('user tries to login without password', async ({ page }) => {
+    const login = new LoginPage(page);
+    await login.goto();
+    await login.login('standard_user', '');
+    await expect(page.locator('[data-test="error"]')).toContainText('Password is required');
+  });
 });
