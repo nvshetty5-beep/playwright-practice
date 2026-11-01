@@ -22,4 +22,11 @@ test.describe('Login', () => {
     await login.login('standard_user', '');
     await expect(page.locator('[data-test="error"]')).toContainText('Password is required');
   });
+  
+  test('user tries to login without username', async ({ page }) => {
+    const login = new LoginPage(page);
+    await login.goto();
+    await login.login('', 'secret_sauce');
+    await expect(page.locator('[data-test="error"]')).toContainText('Username is required');
+  });
 });
